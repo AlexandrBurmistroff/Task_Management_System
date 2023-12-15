@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -38,21 +39,27 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             try {
                 username = jwtTokenUtils.getUsername(jwt);
             } catch (ExpiredJwtException e) {
-                log.debug("Token lifetime has expired");
+                log.error("Token lifetime has expired");
             } catch (SignatureException e) {
-                log.debug("The signature is incorrect");
+                log.error("The signature is incorrect");
             }
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                    username,
-                    null,
-                    jwtTokenUtils.getRoles(jwt).stream()
-                            .map(SimpleGrantedAuthority::new)
-                            .collect(Collectors.toList())
-            );
-            SecurityContextHolder.getContext().setAuthentication(token);
+            List<String> roles = jwtTokenUtils.getRoles(jwt);
+
+            if (!roles.isEmpty()) {
+                List<SimpleGrantedAuthority> authorities = roles.stream()
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+
+                UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+                        username,
+                        null,
+                        authorities
+                );
+                SecurityContextHolder.getContext().setAuthentication(token);
+            }
         }
         filterChain.doFilter(request, response);
     }

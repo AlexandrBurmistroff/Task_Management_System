@@ -47,7 +47,7 @@ public class CommentServiceImpl implements CommentService {
         if (comment == null) {
             throw new NotFoundException("Comment not found");
         }
-        if(comment.getUser_id().getId() != userId) {
+        if(comment.getUser().getId() != userId) {
             throw new ConflictException("User Id: " + userId + " is not the author of the comment");
         }
         comment.setComment(newCommentDto.getComment());
@@ -59,7 +59,7 @@ public class CommentServiceImpl implements CommentService {
         if (comment == null) {
             throw new NotFoundException("Comment not found");
         }
-        if(comment.getUser_id().getId() != userId) {
+        if(comment.getUser().getId() != userId) {
             throw new ConflictException("User Id: " + userId + " is not the author of the comment");
         }
         commentRepository.deleteById(comId);

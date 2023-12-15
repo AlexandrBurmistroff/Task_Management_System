@@ -63,7 +63,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto updateTaskByCreator(long creatorId, long taskId, UpdateTaskDto updateTaskDto) {
         checkUser(creatorId);
         Task task = checkTask(taskId);
-        if (task.getCreator_id().getId() != creatorId) {
+        if (task.getCreator().getId() != creatorId) {
             throw new ConflictException("The user is not the task creator");
         }
         if (updateTaskDto.getTitle() != null) {
@@ -87,7 +87,7 @@ public class TaskServiceImpl implements TaskService {
             if (executor == null) {
                 throw new NotFoundException("User Id: " + updateTaskDto.getExecutor_id() + " not found");
             }
-            task.setExecutor_id(executor);
+            task.setExecutor(executor);
         }
         Task updatedTask = taskRepository.save(task);
         return TaskMapper.toTaskDto(updatedTask);
@@ -97,7 +97,7 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto updateTaskStatusByExecutor(long executorId, long taskId, Status status) {
         checkUser(executorId);
         Task task = checkTask(taskId);
-        if (executorId != task.getExecutor_id().getId()) {
+        if (executorId != task.getExecutor().getId()) {
             throw new ConflictException("The user is not the task creator");
         }
         task.setStatus(status);
@@ -120,7 +120,7 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTaskById(long taskId, long creatorId) {
         Task task = checkTask(taskId);
         checkUser(creatorId);
-        if (task.getCreator_id().getId() != creatorId) {
+        if (task.getCreator().getId() != creatorId) {
             throw new ConflictException("The user is not the task creator");
         }
         taskRepository.deleteById(taskId);

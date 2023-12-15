@@ -2,6 +2,7 @@ package com.burmistrov.task.management.system.service.impl;
 
 import com.burmistrov.task.management.system.dto.user.IncomeUserDto;
 import com.burmistrov.task.management.system.dto.user.UserDto;
+import com.burmistrov.task.management.system.entity.Role;
 import com.burmistrov.task.management.system.entity.User;
 import com.burmistrov.task.management.system.exception.ConflictException;
 import com.burmistrov.task.management.system.exception.NotFoundException;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,33 +28,34 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDto addUser(IncomeUserDto incomeUserDto) {
-        User checkUser = findByUserByEmail(incomeUserDto.getEmail());
-        if (checkUser != null) {
+        Optional<Role> userRole = roleRepository.findByName("USER");
+        Role role = userRole.orElseThrow(() -> new RuntimeException("Default user role not found"));
+
+        if (userRepository.existsByEmail(incomeUserDto.getEmail())) {
             throw new ConflictException("User with email address: " + incomeUserDto.getEmail() + " already exists");
         }
         User user = UserMapper.toUser(incomeUserDto);
         user.setPassword(passwordEncoder.encode(incomeUserDto.getPassword()));
-        user.setRoles(Collections.singleton(roleRepository.findByName("USER").get()));
+        user.setRoles(Collections.singleton(role));
         return UserMapper.toUserDto(userRepository.save(user));
     }
 
     @Override
-    public User findByUserByEmail(String email) {
+    public Optional<User> findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
 
     @Override
     public UserDetails loadUserByEmail(String email) {
-        User user = findByUserByEmail(email);
-        if (user == null) {
-            throw new NotFoundException("User with email address: " + email + " not found");
-        }
+        User user = findUserByEmail(email).orElseThrow(() ->
+                new NotFoundException("User with email address: " + email + " not found"));
+        ;
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
@@ -64,6 +67,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        throw new UsernameNotFoundException("Method not implemented");
     }
 }

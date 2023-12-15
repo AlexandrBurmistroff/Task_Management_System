@@ -14,8 +14,8 @@ public class CommentMapper {
 
     public Comment toComment(NewCommentDto newCommentDto, User author, Task task) {
         return Comment.builder()
-                .task_id(task)
-                .user_id(author)
+                .task(task)
+                .user(author)
                 .comment(newCommentDto.getComment())
                 .created(LocalDateTime.now())
                 .build();
@@ -25,7 +25,7 @@ public class CommentMapper {
         return OutCommentDto.builder()
                 .id(comment.getId())
                 .comment(comment.getComment())
-                .username(comment.getUser_id().getUsername())
+                .username(comment.getUser().getUsername())
                 .created(comment.getCreated())
                 .build();
     }

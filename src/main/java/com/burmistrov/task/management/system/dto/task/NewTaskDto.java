@@ -20,7 +20,7 @@ public class NewTaskDto {
     private String title;
 
     @NotBlank(message = "Description cannot be empty")
-    @Size(min = 20, max = 1000, message = "The description size must be from 20 to 1000 characters")
+    @Size(min = 3, max = 1000, message = "The description size must be from 3 to 1000 characters")
     private String description;
 
     @NotBlank(message = "Status cannot be empty")

@@ -13,7 +13,10 @@ import lombok.*;
 public class Role {
 
     @Id
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column
     private String name;
 }

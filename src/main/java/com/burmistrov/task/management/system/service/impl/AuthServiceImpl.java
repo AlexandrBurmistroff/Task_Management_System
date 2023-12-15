@@ -29,9 +29,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
-        User user = userService.findByUserByEmail(authRequest.getEmail());
-        String password = user.getPassword();
-        if (!(passwordEncoder.matches(authRequest.getPassword(), password))) {
+        User user = userService.findUserByEmail(authRequest.getEmail())
+                .orElseThrow(() -> new UnauthorizedException("Incorrect login or password"));
+
+        if (!(passwordEncoder.matches(authRequest.getPassword(), user.getPassword()))) {
             throw new UnauthorizedException("Incorrect login or password");
         }
         UserDetails userDetails = userService.loadUserByEmail(authRequest.getEmail());
@@ -40,7 +41,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public ResponseEntity<?> createNewUser(IncomeUserDto incomeUserDto) {
+    public ResponseEntity<UserDto> createNewUser(IncomeUserDto incomeUserDto) {
         UserDto userDto = userService.addUser(incomeUserDto);
         return ResponseEntity.ok(userDto);
     }

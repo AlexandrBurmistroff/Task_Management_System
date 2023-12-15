@@ -24,23 +24,6 @@ public class TaskController {
 
     private final TaskService taskService;
 
-//    @GetMapping("/user/{userId}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public ResponseEntity<TaskDto> getTasks(@PathVariable Long userId) {
-//        return new ResponseEntity<>(taskService.getTasks(userId));
-//    }
-//
-//    @GetMapping("/{taskId}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public ResponseEntity<TaskDto> getTask(@PathVariable Long taskId) {
-//        return new ResponseEntity<>(taskService.getTask(taskId));
-//    }
-//
-//    @PostMapping
-//    public ResponseEntity<TaskDto> addTask(@RequestBody addTask) {
-//
-//    }
-
     @GetMapping("/{taskId}")
     @ResponseStatus(HttpStatus.OK)
     public FullTaskDto getTaskById(@PathVariable long taskId) {
@@ -81,7 +64,7 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    @ResponseStatus(HttpStatus.CREATED)
+    //@ResponseStatus(HttpStatus.CREATED)
     public TaskDto createTask(@Valid @RequestBody NewTaskDto newTaskDto) {
         Priority priority = Priority.from(newTaskDto.getPriority())
                 .orElseThrow(() -> new BadRequestException("Unknown task priority: " + newTaskDto.getPriority()));
@@ -89,8 +72,8 @@ public class TaskController {
         return taskService.createTask(newTaskDto, priority);
     }
 
-    @PatchMapping("{creatorId}/update/{taskId}")
-    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping("/{creatorId}/update/{taskId}")
+//    @ResponseStatus(HttpStatus.OK)
     public TaskDto updateTaskByCreator(@PathVariable long creatorId, @PathVariable long taskId,
                                        @Valid @RequestBody UpdateTaskDto updateTaskDto) {
         log.info("Request to update a task Id: " + taskId);

@@ -15,28 +15,36 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "tasks")
+@Table(name = "task")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column
     private String title;
+
+    @Column
     private String description;
 
+    @Column
     @Enumerated(EnumType.STRING)
-    private Status status; // Status
+    private Status status;
 
+    @Column
     @Enumerated(EnumType.STRING)
-    private Priority priority; //Priority
+    private Priority priority;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private User creator_id;
+    @JoinColumn(name = "creator_id")
+    private User creator;
 
     //    @OneToMany(mappedBy = "task")
 //    private Collection<User> executor_id;
     @ManyToOne
-    private User executor_id;
+    @JoinColumn(name = "executor_id")
+    private User executor;
 
 //    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
 //    private Collection<Comment> comments;

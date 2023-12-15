@@ -17,12 +17,12 @@ public class TaskMapper {
 
     public Task toTask(NewTaskDto newTaskDto, User creator, Status status, Priority priority, User executor) {
         return Task.builder()
-                .creator_id(creator)
+                .creator(creator)
                 .title(newTaskDto.getTitle())
                 .description(newTaskDto.getDescription())
                 .status(status)
                 .priority(priority)
-                .executor_id(executor)
+                .executor(executor)
                 .build();
     }
 
@@ -33,8 +33,8 @@ public class TaskMapper {
                 .description(task.getDescription())
                 .status(task.getStatus())
                 .priority(task.getPriority())
-                .executor(task.getExecutor_id() != null ?
-                        UserMapper.toShortUserDto(task.getExecutor_id()) : null)
+                .executor(task.getExecutor() != null ?
+                        UserMapper.toShortUserDto(task.getExecutor()) : null)
                 .build();
     }
 
@@ -45,8 +45,8 @@ public class TaskMapper {
                 .description(task.getDescription())
                 .status(task.getStatus())
                 .priority(task.getPriority())
-                .executor(task.getExecutor_id() != null ?
-                        UserMapper.toShortUserDto(task.getExecutor_id()) : null)
+                .executor(task.getExecutor() != null ?
+                        UserMapper.toShortUserDto(task.getExecutor()) : null)
                 .comments(comments)
                 .build();
     }

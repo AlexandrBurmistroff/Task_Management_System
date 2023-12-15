@@ -13,17 +13,22 @@ import java.time.LocalDateTime;
 @Builder
 @Table(name = "comments")
 public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column
     private String comment;
 
     @ManyToOne
-    private Task task_id;
+    @JoinColumn(name = "task_id", referencedColumnName = "id")
+    private Task task;
 
     @ManyToOne
-    private User user_id;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
+    @Column
     private LocalDateTime created;
 }
