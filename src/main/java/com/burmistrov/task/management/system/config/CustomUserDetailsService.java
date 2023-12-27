@@ -1,7 +1,7 @@
 package com.burmistrov.task.management.system.config;
 
 import com.burmistrov.task.management.system.entity.User;
-import com.burmistrov.task.management.system.exception.NotFoundException;
+import com.burmistrov.task.management.system.exception.NotFoundCustomException;
 import com.burmistrov.task.management.system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findUserByEmail(username).orElseThrow(() ->
-                new NotFoundException("User: " + username + " not found"));
+                new NotFoundCustomException("User: " + username + " not found"));
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
@@ -37,7 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     public UserDetails loadUserByEmail(String email) {
         User user = findUserByEmail(email).orElseThrow(() ->
-                new NotFoundException("User with email address: " + email + " not found"));
+                new NotFoundCustomException("User with email address: " + email + " not found"));
         ;
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
