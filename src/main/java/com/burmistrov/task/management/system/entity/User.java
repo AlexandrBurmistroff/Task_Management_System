@@ -31,13 +31,4 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Task task_id;
-//
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private Collection<Task> tasks;
-//
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private Collection<Comment> comments;
 }

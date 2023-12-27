@@ -7,8 +7,6 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.Collection;
-
 @Entity
 @Getter
 @Setter
@@ -40,12 +38,7 @@ public class Task {
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    //    @OneToMany(mappedBy = "task")
-//    private Collection<User> executor_id;
     @ManyToOne
     @JoinColumn(name = "executor_id")
     private User executor;
-
-//    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
-//    private Collection<Comment> comments;
 }
