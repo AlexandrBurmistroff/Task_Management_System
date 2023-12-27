@@ -1,6 +1,6 @@
 package com.burmistrov.task.management.system.dto.task;
 
-import com.burmistrov.task.management.system.dto.comment.OutCommentDto;
+import com.burmistrov.task.management.system.dto.comment.CommentDto;
 import com.burmistrov.task.management.system.dto.user.ShortUserDto;
 import com.burmistrov.task.management.system.enums.Priority;
 import com.burmistrov.task.management.system.enums.Status;
@@ -22,5 +22,5 @@ public class FullTaskDto {
     private Priority priority;
     private ShortUserDto creator;
     private ShortUserDto executor;
-    private List<OutCommentDto> comments;
+    private List<CommentDto> comments;
 }

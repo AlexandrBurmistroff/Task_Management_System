@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Builder
-public class IncomeUserDto {
+public class NewUserDto {
 
     @NotBlank(message = "The name cannot be empty. Enter your name")
     @Size(min = 1, message = "The name cannot be shorter than 1 letter")

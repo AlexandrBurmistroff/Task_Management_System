@@ -10,9 +10,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OutCommentDto {
-    private long id;
-    private String username;
+public class CommentDto {
+    private Long id;
+    private long taskId;
+    private String authorName;
     private String comment;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
