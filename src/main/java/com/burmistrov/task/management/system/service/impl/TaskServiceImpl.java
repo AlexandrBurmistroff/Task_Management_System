@@ -1,6 +1,6 @@
 package com.burmistrov.task.management.system.service.impl;
 
-import com.burmistrov.task.management.system.dto.comment.OutCommentDto;
+import com.burmistrov.task.management.system.dto.comment.CommentDto;
 import com.burmistrov.task.management.system.dto.task.FullTaskDto;
 import com.burmistrov.task.management.system.dto.task.NewTaskDto;
 import com.burmistrov.task.management.system.dto.task.TaskDto;
@@ -13,7 +13,7 @@ import com.burmistrov.task.management.system.enums.Sort;
 import com.burmistrov.task.management.system.enums.Status;
 import com.burmistrov.task.management.system.exception.BadRequestException;
 import com.burmistrov.task.management.system.exception.ConflictException;
-import com.burmistrov.task.management.system.exception.NotFoundException;
+import com.burmistrov.task.management.system.exception.NotFoundCustomException;
 import com.burmistrov.task.management.system.mapper.CommentMapper;
 import com.burmistrov.task.management.system.mapper.TaskMapper;
 import com.burmistrov.task.management.system.repository.CommentRepository;
@@ -43,13 +43,13 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto createTask(NewTaskDto newTaskDto, Priority priority) {
         User creator = userRepository.findUserById(newTaskDto.getCreator_id());
         if (creator == null) {
-            throw new NotFoundException("User with email address: " + newTaskDto.getCreator_id() + " already exists");
+            throw new NotFoundCustomException("User with email address: " + newTaskDto.getCreator_id() + " already exists");
         }
         User executor;
         if (newTaskDto.getExecutor_id() != null) {
             executor = userRepository.findUserById(newTaskDto.getExecutor_id());
             if (executor == null) {
-                throw new NotFoundException("User with email address: " + newTaskDto.getExecutor_id() + " already exists");
+                throw new NotFoundCustomException("User with email address: " + newTaskDto.getExecutor_id() + " already exists");
             }
         } else {
             executor = null;
@@ -85,7 +85,7 @@ public class TaskServiceImpl implements TaskService {
         if (updateTaskDto.getExecutor_id() != null) {
             User executor = userRepository.findUserById(updateTaskDto.getExecutor_id());
             if (executor == null) {
-                throw new NotFoundException("User Id: " + updateTaskDto.getExecutor_id() + " not found");
+                throw new NotFoundCustomException("User Id: " + updateTaskDto.getExecutor_id() + " not found");
             }
             task.setExecutor(executor);
         }
@@ -110,10 +110,10 @@ public class TaskServiceImpl implements TaskService {
     public FullTaskDto getTaskById(long id) {
         Task task = checkTask(id);
         List<Comment> taskComments = commentRepository.findCommentsByTaskId(id);
-        List<OutCommentDto> commentDtos = taskComments.stream()
-                .map(CommentMapper::toOutCommentDto)
+        List<CommentDto> commentDtoList = taskComments.stream()
+                .map(CommentMapper::toCommentDto)
                 .collect(Collectors.toList());
-        return TaskMapper.toFullTaskDto(task, commentDtos);
+        return TaskMapper.toFullTaskDto(task, commentDtoList);
     }
 
     @Override
@@ -163,8 +163,8 @@ public class TaskServiceImpl implements TaskService {
         List<Long> taskIds = tasks.stream()
                 .map(Task::getId)
                 .collect(Collectors.toList());
-        List<OutCommentDto> tasksComments = commentRepository.findCommentsByTaskIdIn(taskIds).stream()
-                .map(CommentMapper::toOutCommentDto)
+        List<CommentDto> tasksComments = commentRepository.findCommentsByTaskIdIn(taskIds).stream()
+                .map(CommentMapper::toCommentDto)
                 .collect(Collectors.toList());
         return tasks.stream()
                 .map(fullTaskDto -> TaskMapper.toFullTaskDto(fullTaskDto, tasksComments))
@@ -174,14 +174,14 @@ public class TaskServiceImpl implements TaskService {
     private void checkUser(long userId) {
         User user = userRepository.findUserById(userId);
         if (user == null) {
-            throw new NotFoundException("User Id: " + userId + " not found");
+            throw new NotFoundCustomException("User Id: " + userId + " not found");
         }
     }
 
     private Task checkTask(long taskId) {
         Task task = taskRepository.findById(taskId);
         if (task == null) {
-            throw new NotFoundException("Task Id: " + taskId + " not found");
+            throw new NotFoundCustomException("Task Id: " + taskId + " not found");
         }
         return task;
     }
