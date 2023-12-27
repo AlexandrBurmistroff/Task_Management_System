@@ -1,6 +1,6 @@
 package com.burmistrov.task.management.system.mapper;
 
-import com.burmistrov.task.management.system.dto.comment.OutCommentDto;
+import com.burmistrov.task.management.system.dto.comment.CommentDto;
 import com.burmistrov.task.management.system.dto.task.FullTaskDto;
 import com.burmistrov.task.management.system.dto.task.NewTaskDto;
 import com.burmistrov.task.management.system.dto.task.TaskDto;
@@ -33,18 +33,20 @@ public class TaskMapper {
                 .description(task.getDescription())
                 .status(task.getStatus())
                 .priority(task.getPriority())
+                .creator(UserMapper.toShortUserDto(task.getCreator()))
                 .executor(task.getExecutor() != null ?
                         UserMapper.toShortUserDto(task.getExecutor()) : null)
                 .build();
     }
 
-    public FullTaskDto toFullTaskDto(Task task, List<OutCommentDto> comments) {
+    public FullTaskDto toFullTaskDto(Task task, List<CommentDto> comments) {
         return FullTaskDto.builder()
                 .id(task.getId())
                 .title(task.getTitle())
                 .description(task.getDescription())
                 .status(task.getStatus())
                 .priority(task.getPriority())
+                .creator(UserMapper.toShortUserDto(task.getCreator()))
                 .executor(task.getExecutor() != null ?
                         UserMapper.toShortUserDto(task.getExecutor()) : null)
                 .comments(comments)

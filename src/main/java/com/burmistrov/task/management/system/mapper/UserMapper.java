@@ -1,6 +1,6 @@
 package com.burmistrov.task.management.system.mapper;
 
-import com.burmistrov.task.management.system.dto.user.IncomeUserDto;
+import com.burmistrov.task.management.system.dto.user.NewUserDto;
 import com.burmistrov.task.management.system.dto.user.ShortUserDto;
 import com.burmistrov.task.management.system.dto.user.UserDto;
 import com.burmistrov.task.management.system.entity.User;
@@ -12,11 +12,11 @@ import java.util.HashSet;
 @UtilityClass
 public class UserMapper {
 
-    public User toUser(IncomeUserDto incomeUserDto) {
+    public User toUser(NewUserDto newUserDto) {
         return User.builder()
-                .username(incomeUserDto.getUsername())
-                .email(incomeUserDto.getEmail())
-                .password(incomeUserDto.getPassword())
+                .username(newUserDto.getUsername())
+                .email(newUserDto.getEmail())
+                .password(newUserDto.getPassword())
                 .roles(new HashSet<>(Roles.USER.ordinal()))
                 .build();
     }
