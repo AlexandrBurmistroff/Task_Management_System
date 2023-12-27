@@ -17,6 +17,11 @@
         <java.version>17</java.version>
         <io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
         <javax.xml.bind.version>2.3.1</javax.xml.bind.version>
+        <org.liquibase.version>4.25.1</org.liquibase.version>
+        <io.swagger.core.v3.version>2.2.19</io.swagger.core.v3.version>
+        <io.springfox.version>3.0.0</io.springfox.version>
+        <org.springdoc.version>2.1.0</org.springdoc.version>
+        <javax.servlet.version>4.0.1</javax.servlet.version>
     </properties>
     <dependencies>
         <dependency>
@@ -68,6 +73,37 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-core -->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>${org.liquibase.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-annotations -->
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${io.swagger.core.v3.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${org.springdoc.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${io.springfox.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${javax.servlet.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
