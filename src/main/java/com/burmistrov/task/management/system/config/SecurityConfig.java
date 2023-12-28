@@ -46,6 +46,7 @@ public class SecurityConfig {
                         auth -> auth.requestMatchers("/login", "/register").permitAll()
                                 .requestMatchers(AUTH_WHITELIST_SWAGGER).permitAll()
                                 .requestMatchers("/tasks/**").authenticated()
+                                .requestMatchers("/comments/**").authenticated()
                                 .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
