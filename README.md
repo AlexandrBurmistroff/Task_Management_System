@@ -69,7 +69,7 @@
 
 ```json
 {
-  "token": ""
+  "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMkBnbWFpbC5jb20iLCJyb2xlcyI6WyJVU0VSIl0sImlhdCI6MTcwMzY5MjE2NiwiZXhwIjoxNzAzNjkyNzY2fQ.TS15YnlljDuSn71vzo8xlhtYYYk6MDygGNtMj-Ncmbk"
 }
 ```
 
