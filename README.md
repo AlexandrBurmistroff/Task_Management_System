@@ -74,10 +74,10 @@
 ```
 
 ## Стек технологий:
-Java 17
-Spring Boot 3.2.0
-Spring Security
-PostgreSQL
-Liquibase
-Docker
-JUnit
+- Java 17
+- Spring Boot 3.2.0
+- Spring Security
+- PostgreSQL
+- Liquibase
+- Docker
+- JUnit
