@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: liquibase/scripts/task_manager_system_tables.sql
