@@ -1,42 +1,42 @@
-# Система управления задачами
+# Task management system
 
-## Описание приложения:
+## Application Description:
 
-Система обеспечивает создание, редактирование, удаление и просмотр задач.<br>
-Каждая задача содержит заголовок, описание, статус("в ожидании", "в процессе", "завершено")<br>
-и приоритет("высокий", "средний", "низкий"), а также автора задачи и исполнителя.<br><br>
+The system provides creation, editing, deletion and viewing of tasks.<br>
+Each task contains a title, description, status ("pending", "in progress", "completed")<br>
+and priority (“high”, “medium”, “low”), as well as the author of the task and the executor.<br><br>
 
-1. Приложение поддерживает аутентификацию и авторизацию пользователей по email и паролю.
-2. Доступ к API аутентифицировано с помощью JWT токена.
-3. Пользователи могут управлять своими задачами: создавать новые, редактировать существующие,<br>
-просматривать и удалять, менять статус и назначать исполнителей задачи.
-4. Пользователи могут просматривать задачи других пользователей, а исполнители задачи могут<br>
-менять статус своих задач.
-5. К задачам можно оставлять комметнарии.
-6. API позволяет получать задачи конкретного автора или исполнителя, а также все комментарии к ним.<br>
-Обеспечена фильтрация и пагинация вывода.
-7. Приложение обрабатывает основные ошибки, и валидирует входящие данные.
-8. Приложение задукоментировано с помощью Open API, Swagger, Java-doc. Настроен Swagger UI.
-9. Код покрыт JUnit тестами.
+1. The application supports user authentication and authorization using email and password.
+2. Access to the API is authenticated using a JWT token.
+3. Users can manage their tasks: create new ones, edit existing ones,<br>
+   view and delete, change status and assign tasks to performers.
+4. Users can view tasks of other users, and task executors can<br>
+   change the status of your tasks.
+5. You can leave comments on tasks.
+6. The API allows you to receive tasks of a specific author or performer, as well as all comments to them.<br>
+   Output filtering and pagination is provided.
+7. The application handles basic errors and validates incoming data.
+8. The application is documented using Open API, Swagger, Java-doc. Swagger UI configured.
+9. The code is covered with JUnit tests.
 
-## Руководство по запуску приложения:
+## Application Launch Guide:
 
-Вариант 1:
-1. Склонировать данное приложение к себе на ПК.
-2. Открыть в Intellij Idea или другой аналогичной среде разработки.
-3. Запустить приложение.
+Option 1:
+1. Clone this application to your PC.
+2. Open in Intellij Idea or other unusual development environment.
+3. Launch the application.
 
-Вариант 2:
-1. Запустить через Docker с помощью команды: ```docker-compose up```
-2. Открыть браузер, пройти по пути: ```http://localhost:8080/swagger-ui/index.html#/``` 
+Option 2:
+1. Run via Docker using the command: ```docker-compose up```
+2. Open browser, follow the path: ```http://localhost:8080/swagger-ui/index.html#/```
 
-## Примеры запросов и ответов:
+## Examples of requests and responses:
 
 ### ```POST: /register```
 
-Регистрация нового пользователя
+New User Registration
 
-Запрос:
+Request:
 
 ```json
 {
@@ -46,7 +46,7 @@
 }
 ```
 
-Ответ:
+Response:
 
 ```json
 {
@@ -58,9 +58,9 @@
 
 ### ```POST: /login```
 
-Аутентификация пользователя
+User authentication
 
-Запрос:
+Request:
 
 ```json
 {
@@ -69,7 +69,7 @@
 }
 ```
 
-Ответ:
+Response:
 
 ```json
 {
@@ -79,9 +79,9 @@
 
 ### ```GET: /task/{taskId}```
 
-Получение задачи по ID
+Retrieving a task by ID
 
-Запрос:
+Request:
 
 ```json
 {
@@ -89,7 +89,7 @@
 }
 ```
 
-Ответ:
+Response:
 
 ```json
 {
@@ -127,9 +127,9 @@
 
 ### ```POST: /task/create```
 
-Создание новой задачи
+Create a new task
 
-Запрос:
+Request:
 
 ```json
 {
@@ -142,7 +142,7 @@
 }
 ```
 
-Ответ:
+Response:
 
 ```json
 {
@@ -163,9 +163,9 @@
 ```
 ### ```PATCH: /task/{creatorId}/update/{taskId}```
 
-Обновление задачи автора
+Updating the author's task
 
-Запрос:
+Request:
 
 ```json
 {
@@ -177,7 +177,7 @@
 }
 ```
 
-Ответ:
+Response:
 
 ```json
 {
@@ -199,9 +199,9 @@
 
 ### ```PATCH: /update/{executorId}/{taskId}```
 
-Обновление задачи исполнителя
+Updating an Executor's Task
 
-Запрос:
+Request:
 
 ```json
 {
@@ -209,7 +209,7 @@
 }
 ```
 
-Ответ:
+Response:
 
 ```json
 {
@@ -231,16 +231,16 @@
 
 ### ```DELETE: /update/{executorId}/{taskId}```
 
-Удаление задачи исполнителем
+Deleting a task by an executor
 
-Запрос:
+Request:
 
 ```json
 {
 }
 ```
 
-Ответ: 204 статус
+Response: 204 status
 
 ```json
 {
@@ -249,16 +249,16 @@
 
 ### ```GET: /task```
 
-Получение всех задач
+Getting all tasks
 
-Запрос:
+Request:
 
 ```json
 {
 }
 ```
 
-Ответ:
+Response:
 
 ```json
 [
@@ -329,16 +329,16 @@
 
 ### ```GET: /tasks/creator/1?sort=STATUS&from=0&size=10```
 
-Получение списка задач, созданных конкретным пользователем, с дополнительной сортировкой и нумерацией страниц
+Retrieving a list of tasks created by a specific user, with additional sorting and pagination
 
-Запрос:
+Request:
 
 ```json
 {
 }
 ```
 
-Ответ:
+Response:
 
 ```json
 [
@@ -378,16 +378,16 @@
 
 ### ```GET: /tasks/executor/2?sort=STATUS&from=0&size=10```
 
-Получение списка задач, назначенных конкретному пользователю, с дополнительной сортировкой и нумерацией страниц
+Retrieving a list of tasks assigned to a specific user, with additional sorting and pagination
 
-Запрос:
+Request:
 
 ```json
 {
 }
 ```
 
-Ответ:
+Response:
 
 ```json
 [
@@ -412,9 +412,9 @@
 
 ### ```POST: /comments/{taskId}/{userId}```
 
-Добавление комментария
+Adding a comment
 
-Запрос:
+Request:
 
 ```json
 {
@@ -422,7 +422,7 @@
 }
 ```
 
-Ответ:
+Response:
 
 ```json
 {
@@ -436,9 +436,9 @@
 
 ### ```PATCH: /comments/{commentId}/{userId}```
 
-Обновление комментария
+Comment update
 
-Запрос:
+Request:
 
 ```json
 {
@@ -446,7 +446,7 @@
 }
 ```
 
-Ответ:
+Response:
 
 ```json
 {
@@ -460,23 +460,23 @@
 
 ### ```DELETE: /comments/{commentId}/{userId}```
 
-Удаление комментария
+Deleting a comment
 
-Запрос:
-
-```json
-{
-}
-```
-
-Ответ: 204 статус
+Request:
 
 ```json
 {
 }
 ```
 
-## Стек технологий:
+Response: 204 status
+
+```json
+{
+}
+```
+
+## Technology stack:
 - Java 17
 - Spring Boot 3.2.0
 - Spring Security
