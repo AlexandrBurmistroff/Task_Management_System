@@ -62,6 +62,14 @@ class CommentControllerTest {
                 .roles(new HashSet<>(Roles.USER.ordinal()))
                 .build();
 
+        creator = User.builder()
+                .id(1L)
+                .username(ConstantsTest.USER_NAME_TOM)
+                .email(ConstantsTest.EMAIL_TOM)
+                .password(ConstantsTest.PASSWORD)
+                .roles(new HashSet<>(Roles.USER.ordinal()))
+                .build();
+
         commentDto = CommentDto.builder()
                 .id(1L)
                 .taskId(1L)
@@ -83,21 +91,13 @@ class CommentControllerTest {
                 .creator(creator)
                 .executor(null)
                 .build();
-
-        creator = User.builder()
-                .id(1L)
-                .username(ConstantsTest.USER_NAME_TOM)
-                .email(ConstantsTest.EMAIL_TOM)
-                .password(ConstantsTest.PASSWORD)
-                .roles(new HashSet<>(Roles.USER.ordinal()))
-                .build();
     }
 
     @Test
     void addComment() throws Exception {
         when(commentService.addNewComment(anyLong(), anyLong(), any())).thenReturn(commentDto);
 
-        mockMvc.perform(post("/tasks/comments/1/1")
+        mockMvc.perform(post("/comments/1/1")
                         .with(user(ConstantsTest.EMAIL_ALEX).password(ConstantsTest.PASSWORD).roles(ConstantsTest.USER))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newCommentDto))
@@ -123,7 +123,7 @@ class CommentControllerTest {
                 .build();
         when(commentService.updateComment(anyLong(), anyLong(), any())).thenReturn(updatedComment);
 
-        mockMvc.perform(patch("/tasks/comments/1/1")
+        mockMvc.perform(patch("/comments/1/1")
                         .with(user(ConstantsTest.USER_NAME_ALEX).password(ConstantsTest.PASSWORD).roles(ConstantsTest.USER))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newComment))
@@ -135,7 +135,7 @@ class CommentControllerTest {
 
     @Test
     void deleteComment() throws Exception {
-        mockMvc.perform(delete("/tasks/comments/1/1")
+        mockMvc.perform(delete("/comments/1/1")
                         .with(user(ConstantsTest.USER_NAME_ALEX).password(ConstantsTest.PASSWORD).roles(ConstantsTest.USER))
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding(StandardCharsets.UTF_8)

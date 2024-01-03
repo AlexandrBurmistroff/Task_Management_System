@@ -24,11 +24,13 @@ and priority (“high”, “medium”, “low”), as well as the author of the
 Option 1:
 1. Clone this application to your PC.
 2. Open in Intellij Idea or other unusual development environment.
-3. Launch the application.
+3. Connect to the database in PostgreSQL.
+4. Launch the application.
 
 Option 2:
-1. Run via Docker using the command: ```docker-compose up```
-2. Open browser, follow the path: ```http://localhost:8080/swagger-ui/index.html#/```
+1. Connect to the database in PostgreSQL.
+2. Run via Docker using the command: ```docker-compose up```
+3. Open browser, follow the path: ```http://localhost:8080/swagger-ui/index.html#/```
 
 ## Examples of requests and responses:
 
