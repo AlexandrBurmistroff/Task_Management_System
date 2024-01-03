@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  app:
+    image: task_management_system_image
+    container_name: task_management_system
+    ports:
+      - "8080:8080"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: on-failure
+    depends_on:
+      - db_postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db_postgres:5432/TaskManager
+      - SPRING_DATASOURCE_USERNAME=adminTaskManagement
+      - SPRING_DATASOURCE_PASSWORD=ManagementAdmi8n
+
+  db_postgres:
+    image: postgres:15
+    container_name: db_postgres
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - ./data:/var/lib/db_postgres/data
+    environment:
+      - POSTGRES_DB=TaskManager
+      - POSTGRES_USER=adminTaskManagement
+      - POSTGRES_PASSWORD=ManagementAdmi8n
